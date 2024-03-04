@@ -20,9 +20,11 @@ class Api::V1::ProductsController < ApplicationController
       description: prod_params[:description],
       price: prod_params[:price],
       currency: prod_params[:currency],
+      rating: 0,
       colors: prod_params[colors],
       sizes: prod_params[sizes],
-      count: prod_params[count]
+      count: prod_params[count],
+      noOfSales: 0
     )
 
     if product.save
