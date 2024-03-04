@@ -7,22 +7,42 @@ class Api::V1::ProductsController < ApplicationController
   def show
     product = Product.find_by(id: params[:id])
 
-    if (product)
+    if product
       render json: product, status: 200
     else
-      render json: {error: "Product not found!"}
+      render json: { error: 'Product not found!' }
     end
   end
 
   def create
     product = Product.new(
-
+      name: prod_params[:name],
+      description: prod_params[:description],
+      price: prod_params[:price],
+      currency: prod_params[:currency],
+      colors: prod_params[colors],
+      sizes: prod_params[sizes],
+      count: prod_params[count]
     )
 
     if product.save
       render json: product, status: 200
     else
-      render json: {error: "Error creating product!"}
+      render json: { error: 'Error creating product!' }
     end
+  end
+
+  private
+
+  def prod_params
+    params.require(:product).permit([
+        :name,
+        :description,
+        :price,
+        :currency,
+        :colors,
+        :sizes,
+        :count
+    ])
   end
 end
